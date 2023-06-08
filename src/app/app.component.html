@@ -1,5 +1,18 @@
 <h1>INSY-API</h1>
-<input type="url">
-<employee-form></employee-form>
-<employee-table [employees]="employees"></employee-table>
-<button (click)="AddEmployee()">Add</button>
+<br>
+<label for="url">URL</label>
+<input id="url" class="form-control" ngModel #apiUrl="ngModel" type="url" name="url" (keyup.enter)="changeUrl(apiUrl.value)" [disabled]="urlSubmitted" required>
+<br>
+<br>
+<br>
+<div *ngIf="urlSubmitted">
+<employee-form (employeeAdded)="addEmployee($event)"></employee-form>
+<br>
+<br>
+<br>
+<div>
+  <label for="numberOfRows">Anzahl der Datensätze</label>
+  <input class="form-control" ngModel #numberOfRows="ngModel" type="number" id="numberOfRows" (keyup.enter)="getEmployees(numberOfRows.value)" required>
+  <employee-table [employees]="employees" *ngIf="numberOfRowsSubmitted"></employee-table>
+</div>
+</div>

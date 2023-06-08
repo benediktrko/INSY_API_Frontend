@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import {last, map, Observable, throwError, toArray} from "rxjs";
 import { catchError, retry } from 'rxjs/operators';
-import {HttpClient, HttpErrorResponse, HttpEvent, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpEvent, HttpHandler, HttpHeaders, HttpRequest} from '@angular/common/http';
 import {Employee} from "./employee";
 
 @Injectable({
   providedIn: 'root'
 })
-export class EmployeeService {
+export class EmployeeService implements HttpHandler {
 
 
   private _employees: Employee[] = [];
+  private _employeesUrl: string;
+  private http: HttpClient = new HttpClient(this);
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
@@ -18,20 +20,10 @@ export class EmployeeService {
     })
   };
 
-
-  private HandleError(text: string, employee: Employee) {
-    if (text === "addEmployee") {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', text);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong.
-      console.error(
-        `Backend returned code ${text}, body was: `, text);
-    }
-    // Return an observable with a user-facing error message.
-    return throwError(() => new Error('Something bad happened; please try again later.'));
+  set Url(value: string){
+    this._employeesUrl = value;
   }
+
   AddEmployee(employeeId: number, lastName: string, firstName: string, title: string, titleOfCourtesy: string, birthday: Date, hireDate: Date, address: string, city: string, region: string, postalCode: string, country: string, homePhone: string, extension: string, photo: string, notes: string, reportsTo: number, photoPath: string):Observable<Employee>{
 
     let employee = new Employee(employeeId, lastName, firstName, title, titleOfCourtesy, birthday, hireDate, address, city, region, postalCode, country, homePhone, extension, photo, notes, reportsTo, photoPath);
@@ -55,8 +47,12 @@ export class EmployeeService {
   }
 
 
-  constructor(private http: HttpClient, private _employeesUrl: string) {
+  constructor() {
 
+  }
+
+  handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
+    return undefined;
   }
 }
 

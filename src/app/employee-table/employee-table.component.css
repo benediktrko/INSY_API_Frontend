@@ -9,3 +9,14 @@
   width: 100%;
   margin-top: 20px;
 }
+.example-header {
+  min-height: 64px;
+  padding: 8px 24px 0;
+
+}
+mat-form-field {
+  font-size: 14px;
+  height: 60px;
+  width: 100%;
+}
+

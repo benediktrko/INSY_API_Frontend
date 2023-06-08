@@ -1,6 +1,8 @@
+
 export class Employee{
 
 static readonly tableHeader = [
+  'select',
    'EmployeeId',
   'LastName',
   'FirstName',

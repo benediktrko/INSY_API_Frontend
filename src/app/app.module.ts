@@ -10,28 +10,34 @@ import { MatChipsModule } from '@angular/material/chips';
 
 
 import { AppComponent } from './app.component';
-import { EmployeesComponent } from './employees/employees.component';
 import { EmployeeFormComponent } from './employee-form/employee-form.component';
 import { EmployeeTableComponent } from './employee-table/employee-table.component';
+import {MatSortModule} from "@angular/material/sort";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatInputModule} from "@angular/material/input";
+import {FormsModule} from "@angular/forms";
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    EmployeesComponent,
     EmployeeFormComponent,
     EmployeeTableComponent,
   ],
-    imports: [
-        BrowserModule,
-        MatTableModule,
-        HttpClientModule,
-        MatPaginatorModule,
-        BrowserAnimationsModule,
-        MatChipsModule,
+  imports: [
+    BrowserModule,
+    MatTableModule,
+    HttpClientModule,
+    MatPaginatorModule,
+    BrowserAnimationsModule,
+    MatChipsModule,
+    MatSortModule,
+    MatCheckboxModule,
+    MatInputModule,
+    FormsModule,
 
-    ],
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
