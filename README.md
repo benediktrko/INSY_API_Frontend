@@ -1,4 +1,25 @@
 # INSYAPIFrontend
+Installing on Windows 
+
+1.Node.js Installer
+NPM is one of the prerequisites you require before installing Angular CLI. Angular will need to have Node.js in your system for it to run (the 8.x or the 10.x version). Node.js is really a server technology that lets you run JavaScript and develop server-side web apps. You can skip this step if you already have it installed. You can download it from [here](https://nodejs.org/en/download/).
+Move through the pages. Click on Finish to have it installed in your computer.
+
+
+
+2.Test Installation of Node.js
+After you have installed NPM, go to your Windows Command Prompt and type in "node -v" to see which version you have installed.
+
+
+3.Install Angular CLI
+The next step is to install Angular CLI. Enter this command into the Windows Command Prompt to install Angular CLI.
+
+### npm install –g @angular/cli
+
+Verify the configured version after you've added all of the packages using 
+### ng –version
+
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.0.
 
