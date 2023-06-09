@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {Employee} from "./employee-service/employee";
 import {EmployeeService} from "./employee-service/employee.service";
-import {HttpClient, HttpHandler} from "@angular/common/http";
+import {HttpClient, HttpClientModule, HttpHandler} from "@angular/common/http";
 
 @Component({
   selector: 'app-root',
@@ -11,26 +11,13 @@ import {HttpClient, HttpHandler} from "@angular/common/http";
 export class AppComponent{
   title = 'INSY_API_Frontend';
   employees: Employee[] = [];
-  counter = 0;
-  service: EmployeeService = new EmployeeService();
+  numberOfEmployees = 0;
+
   urlSubmitted: boolean = false;
   numberOfRowsSubmitted: boolean = false;
 
 
-  constructor() {
-
-  }
-
-  AddEmployee(){
-    this.employees.push(new Employee(this.counter++, 'Huber', 'Benedikt', 'Mr.', 'Sir', new Date('13-03-2005'), new Date('13-03-2005'), 'Ocwirkgasse 5/4/10', 'Vienna', 'Vienna', '1210', 'Austria', '9274930923849', '+43', 'asdkföjasdkföasdfkaösfk', 'The smartest guy', 3, 'photo.png'))
-    this.employees = this.employees.slice();
-  }
-
-  getEmployees(value: number) {
-    this.employees = this.service.GetEmployees(value);
-    this.employees.push(new Employee(1, 'Rako', 'Benedikt', 'Mr.', 'Sir', new Date('13-03-2005'), new Date('13-03-2005'), 'Ocwirkgasse 5/4/10', 'Vienna', 'Vienna', '1210', 'Austria', '9274930923849', '+43', 'asdkföjasdkföasdfkaösfk', 'The smartest guy', 3, 'photo.png'));
-    this.employees = this.employees.slice();
-    this.numberOfRowsSubmitted = true;
+  constructor(private service: EmployeeService) {
   }
 
   changeUrl(value: any) {
@@ -39,10 +26,45 @@ export class AppComponent{
     this.urlSubmitted = true;
   }
 
+  getEmployees(value: number) {
+    this.service.GetEmployees(value)
+      .then(value =>{
+        this.employees = value.slice();
+        this.numberOfRowsSubmitted = true;
+      })
+
+  }
+
   addEmployee($event: Employee) {
-    console.log($event);
-    console.log(JSON.stringify($event));
-    this.employees.push($event);
-    this.employees = this.employees.slice();
+
+
+      this.service.AddEmployeeJson($event)
+        .then(value =>{
+          if(value == 'OK'){
+            this.getEmployees(this.numberOfEmployees);
+            alert('Employee added.')
+          }
+          else{
+            alert('Employee could not be added');
+          }
+        })
+
+
+  }
+
+  deleteEmployee(id: number) {
+    this.service.DeleteEmployee(id)
+      .then(value => {
+        if (value == 'OK'){
+          this.getEmployees(this.numberOfEmployees);
+          alert(`Employee with ID ${id} deleted.`);
+        }
+        else {
+          alert(`Employee could not be deleted`);
+        }
+      })
+
+
+
   }
 }

@@ -1,4 +1,13 @@
-import {Component, Input, ViewChild, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  ViewChild,
+  AfterViewInit,
+  OnChanges,
+  SimpleChanges,
+  EventEmitter,
+  Output
+} from '@angular/core';
 import {Employee} from "../employee-service/employee";
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from "@angular/material/table";
@@ -17,7 +26,7 @@ export class EmployeeTableComponent implements AfterViewInit, OnChanges{
   @Input('employees') employees: Employee[] = [];
   datasource: MatTableDataSource<Employee> = new MatTableDataSource<Employee>([]);
   selection = new SelectionModel<Employee>(true, []);
-
+  @Output('onDelete') onDelete = new EventEmitter();
   tableHeader = Employee.tableHeader;
 
 
@@ -59,11 +68,12 @@ export class EmployeeTableComponent implements AfterViewInit, OnChanges{
   delete(){
 
     for (let employee of this.selection.selected) {
-      this.employees.splice(this.employees.indexOf(employee, 0), 1);
-      this.selection.toggle(employee);
-    }
-    this.refresh();
+        this.onDelete.emit(employee.EmployeeId);
+      }
+
   }
+
+
 
   applyFilter(filterValue: any) {
     filterValue = filterValue.trim(); // Remove whitespace

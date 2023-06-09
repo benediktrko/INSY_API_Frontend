@@ -7,16 +7,14 @@ import {Employee} from "./employee";
 @Injectable({
   providedIn: 'root'
 })
-export class EmployeeService implements HttpHandler {
+export class EmployeeService {
 
 
   private _employees: Employee[] = [];
   private _employeesUrl: string;
-  private http: HttpClient = new HttpClient(this);
   private httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      Authorization: 'my-auth-token'
+      'Content-Type':  'application/json'
     })
   };
 
@@ -24,35 +22,54 @@ export class EmployeeService implements HttpHandler {
     this._employeesUrl = value;
   }
 
-  AddEmployee(employeeId: number, lastName: string, firstName: string, title: string, titleOfCourtesy: string, birthday: Date, hireDate: Date, address: string, city: string, region: string, postalCode: string, country: string, homePhone: string, extension: string, photo: string, notes: string, reportsTo: number, photoPath: string):Observable<Employee>{
+  /*AddEmployee(employeeId: number, lastName: string, firstName: string, title: string, titleOfCourtesy: string, birthday: Date, hireDate: Date, address: string, city: string, region: string, postalCode: string, country: string, homePhone: string, extension: string, photo: string, notes: string, reportsTo: number, photoPath: string):Observable<Employee>{
 
     let employee = new Employee(employeeId, lastName, firstName, title, titleOfCourtesy, birthday, hireDate, address, city, region, postalCode, country, homePhone, extension, photo, notes, reportsTo, photoPath);
     this._employees.push(employee);
     let jsonString = JSON.stringify(employee);
     return this.http.post<Employee>(this._employeesUrl, employee, this.httpOptions);
 
+  }*/
+  async AddEmployeeJson(value: Employee){
+
+    let text: string;
+    let jsonString = value.toJson();
+    await this.http.post(this._employeesUrl, jsonString, {observe: 'response'})
+      .subscribe(response =>{
+        text = response.statusText;
+      })
+    if (text == 'OK'){
+      this._employees.push(value);
+    }
+    return text;
   }
-  GetEmployees(top: number){
-    let employees : Observable<Employee[]> = this.http.get<any[]>(`${this._employeesUrl}/?top=${top}`);
-    employees.pipe(
-      map(jsonArray => jsonArray.map(json => {
-        this._employees.push(Employee.fromJson(json));
-      }))
-    );
+   async GetEmployees(top: number){
+    await this.http.get(`${this._employeesUrl}/?top=${top}`)
+     .subscribe(response =>{
+       let array: any[]=[];
+       array.push(response);
+       for (let employee of array[0]) {
+         this._employees.push(employee);
+       }
+     });
     return this._employees;
   }
 
-  DeleteEmployee(){
+  async DeleteEmployee(id: number){
+    let text: string;
+    await this.http.delete(`${this._employeesUrl}/?id=${id}`, {observe: 'response'})
+      .subscribe(response =>{
+        text = response.statusText;
 
+      })
+    return text;
   }
 
 
-  constructor() {
+
+  constructor(private http: HttpClient) {
 
   }
 
-  handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
-    return undefined;
-  }
 }
 

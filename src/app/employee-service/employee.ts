@@ -22,6 +22,29 @@ static readonly tableHeader = [
   'ReportsTo',
   'PhotoPath'
 ]
+  toJson(){
+  return{
+    EmployeeId: this.EmployeeId,
+    LastName: this.LastName,
+    FirstName: this.FirstName,
+    Title: this.Title,
+    TitleOfCourtesy: this.TitleOfCourtesy,
+    BirthDay: this.Birthday.toJSON(),
+    HireDate: this.HireDate.toJSON(),
+    Address: this.Address,
+    City: this.City,
+    Region: this.Region,
+    PostalCode: this.PostalCode,
+    Country: this.Country,
+    HomePhone: this.HomePhone,
+    Extension: this.Extension,
+    Photo: this.Photo,
+    Notes: this.Notes,
+    ReportsTo: this.ReportsTo,
+    PhotoPath: this.PhotoPath
+
+  }
+  }
   static fromJson(json: any): Employee {
 
 

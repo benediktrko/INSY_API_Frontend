@@ -12,7 +12,7 @@
 <br>
 <div>
   <label for="numberOfRows">Anzahl der Datensätze</label>
-  <input class="form-control" ngModel #numberOfRows="ngModel" type="number" id="numberOfRows" (keyup.enter)="getEmployees(numberOfRows.value)" required>
-  <employee-table [employees]="employees" *ngIf="numberOfRowsSubmitted"></employee-table>
+  <input class="form-control" min="1" ngModel #numberOfRows="ngModel" type="number" id="numberOfRows" (keyup.enter)="getEmployees(numberOfRows.value)" required>
+  <employee-table [employees]="employees" *ngIf="numberOfRowsSubmitted" (onDelete)="deleteEmployee($event.value)"></employee-table>
 </div>
 </div>
