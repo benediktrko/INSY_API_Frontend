@@ -11,7 +11,8 @@ export class EmployeeFormComponent {
   @Output('employeeAdded') employeeAddedEvent = new EventEmitter();
 
   addEmployee(form: NgForm) {
-    this.employeeAddedEvent.emit(Employee.fromJson(form.value))
+    console.log(form.value);
+    this.employeeAddedEvent.emit(form.value);
   }
 
   protected readonly Employee = Employee;

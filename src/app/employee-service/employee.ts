@@ -24,7 +24,6 @@ static readonly tableHeader = [
 ]
   toJson(){
   return{
-    EmployeeId: this.EmployeeId,
     LastName: this.LastName,
     FirstName: this.FirstName,
     Title: this.Title,

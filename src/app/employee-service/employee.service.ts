@@ -33,8 +33,8 @@ export class EmployeeService {
   async AddEmployeeJson(value: Employee){
 
     let text: string;
-    let jsonString = value.toJson();
-    await this.http.post(this._employeesUrl, jsonString, {observe: 'response'})
+    console.log(value);
+    await this.http.post(this._employeesUrl, value, {observe: 'response'})
       .subscribe(response =>{
         text = response.statusText;
       })
