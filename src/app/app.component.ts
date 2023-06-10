@@ -45,8 +45,10 @@ export class AppComponent{
 
       this.service.AddEmployeeJson($event)
         .then(value =>{
+          this.getEmployees(this.numberOfEmployees);
+          console.log(value);
           if(value == 'OK'){
-            this.getEmployees(this.numberOfEmployees);
+
             alert('Employee added.')
           }
           else{
@@ -58,11 +60,11 @@ export class AppComponent{
   }
 
   deleteEmployee(id: any) {
-    console.log(id);
     this.service.DeleteEmployee(id)
       .then(value => {
+        this.getEmployees(this.numberOfEmployees);
         if (value == 'OK'){
-          this.getEmployees(this.numberOfEmployees);
+
           alert(`Employee with ID ${id} deleted.`);
         }
         else {

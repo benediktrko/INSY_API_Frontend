@@ -33,14 +33,13 @@ export class EmployeeService {
   async AddEmployeeJson(value: Employee){
 
     let text: string;
-    console.log(value);
+
     await this.http.post(this._employeesUrl, value, {observe: 'response'})
       .subscribe(response =>{
         text = response.statusText;
-      })
-    if (text == 'OK'){
-      this._employees.push(value);
-    }
+        console.log(text);
+      });
+
     return text;
   }
    async GetEmployees(top: number){
