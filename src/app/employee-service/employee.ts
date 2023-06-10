@@ -49,24 +49,24 @@ static readonly tableHeader = [
 
 
     return new Employee(
-      json.EmployeeId,
-      json.LastName,
-      json.FirstName,
-      json.Title,
-      json.TitleOfCourtesy,
-      new Date(json.Birthday),
-      new Date(json.HireDate),
-      json.Address,
-      json.City,
-      json.Region,
-      json.PostalCode,
-      json.Country,
-      json.HomePhone,
-      json.Extension,
-      json.Photo,
-      json.Notes,
-      json.ReportsTo,
-      json.PhotoPath
+      json.employeeId,
+      json.lastName,
+      json.firstName,
+      json.title,
+      json.titleOfCourtesy,
+      new Date(json.birthday),
+      new Date(json.hireDate),
+      json.address,
+      json.city,
+      json.region,
+      json.postalCode,
+      json.country,
+      json.homePhone,
+      json.extension,
+      json.photo,
+      json.notes,
+      json.reportsTo,
+      json.photoPath
       );
   }
   constructor(private _employeeId: number,

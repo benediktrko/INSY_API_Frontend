@@ -38,6 +38,7 @@ export class EmployeeTableComponent implements AfterViewInit, OnChanges{
 
     if (changes.employees) {
       this.employees = changes.employees.currentValue;
+      console.log(changes.employees.currentValue);
       this.refresh();
     }
   }
@@ -47,8 +48,11 @@ export class EmployeeTableComponent implements AfterViewInit, OnChanges{
     this.datasource.sort = this.sort;
   }
   refresh() {
-    of(this.employees).subscribe((data: Employee[]) => {
-      this.datasource.data = data.slice();
+
+    of(this.employees).subscribe((data: Employee[] = []) => {
+      setTimeout(() => {
+        this.datasource.data = data.slice();
+      }, 100);
       this.paginator._changePageSize(this.paginator.pageSize);
     });
 

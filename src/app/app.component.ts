@@ -26,13 +26,18 @@ export class AppComponent{
     this.urlSubmitted = true;
   }
 
-  getEmployees(value: number) {
-    this.service.GetEmployees(value)
+ async getEmployees(value: number) {
+    this.employees = [];
+   let temp: Employee[] = [];
+    await this.service.GetEmployees(value)
       .then(value =>{
-        this.employees = value.slice();
-        this.numberOfRowsSubmitted = true;
-      })
+        temp = value;
 
+      });
+
+
+   this.employees = temp;
+    this.numberOfRowsSubmitted = true;
   }
 
   addEmployee($event: Employee) {

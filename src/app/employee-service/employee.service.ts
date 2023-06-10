@@ -44,12 +44,13 @@ export class EmployeeService {
     return text;
   }
    async GetEmployees(top: number){
+    this._employees = [];
     await this.http.get(`${this._employeesUrl}/?top=${top}`)
      .subscribe(response =>{
        let array: any[]=[];
        array.push(response);
        for (let employee of array[0]) {
-         this._employees.push(employee);
+         this._employees.push(Employee.fromJson(employee));
        }
      });
     return this._employees;
