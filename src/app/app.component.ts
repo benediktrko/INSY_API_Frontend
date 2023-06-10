@@ -57,7 +57,8 @@ export class AppComponent{
 
   }
 
-  deleteEmployee(id: number) {
+  deleteEmployee(id: any) {
+    console.log(id);
     this.service.DeleteEmployee(id)
       .then(value => {
         if (value == 'OK'){

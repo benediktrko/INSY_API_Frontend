@@ -72,6 +72,7 @@ export class EmployeeTableComponent implements AfterViewInit, OnChanges{
   delete(){
 
     for (let employee of this.selection.selected) {
+      console.log(employee.EmployeeId);
         this.onDelete.emit(employee.EmployeeId);
       }
 
