@@ -28,7 +28,7 @@ export class EmployeeTableComponent implements AfterViewInit, OnChanges{
   selection = new SelectionModel<Employee>(true, []);
   @Output('onDelete') onDelete = new EventEmitter();
   tableHeader = Employee.tableHeader;
-
+  @Output('onDeleteFinish') onDeleteFinish = new EventEmitter();
 
   constructor() {
 
@@ -37,8 +37,8 @@ export class EmployeeTableComponent implements AfterViewInit, OnChanges{
   ngOnChanges(changes: SimpleChanges) {
 
     if (changes.employees) {
-      this.employees = changes.employees.currentValue;
       console.log(changes.employees.currentValue);
+      this.employees = changes.employees.currentValue;
       this.refresh();
     }
   }
@@ -70,10 +70,13 @@ export class EmployeeTableComponent implements AfterViewInit, OnChanges{
   }
 
   delete(){
-
+  let ids: Number[] = [];
     for (let employee of this.selection.selected) {
-        this.onDelete.emit(employee.EmployeeId);
+      ids.push(employee.EmployeeId);
+      this.selection.deselect(employee);
       }
+    this.onDelete.emit(ids);
+
 
   }
 
@@ -83,5 +86,6 @@ export class EmployeeTableComponent implements AfterViewInit, OnChanges{
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.datasource.filter = filterValue;
+
   }
 }

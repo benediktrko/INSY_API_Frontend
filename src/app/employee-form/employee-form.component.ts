@@ -9,9 +9,11 @@ import {NgForm} from "@angular/forms";
 })
 export class EmployeeFormComponent {
   @Output('employeeAdded') employeeAddedEvent = new EventEmitter();
+  idDefault = 100;
 
   addEmployee(form: NgForm) {
-    this.employeeAddedEvent.emit(form.value);
+    this.employeeAddedEvent.emit(Employee.fromUppercaseJson(form.value));
+
   }
 
   protected readonly Employee = Employee;

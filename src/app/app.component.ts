@@ -49,16 +49,19 @@ export class AppComponent{
 
   deleteEmployee(id: any) {
     this.deleteEmployeeAsync(id);
+
   }
-  async deleteEmployeeAsync(id: any){
-    let text = await this.service.DeleteEmployee(id);
+  async deleteEmployeeAsync(ids: Number[]){
+    let text = await this.service.DeleteEmployee(ids);
     if (text == 'OK'){
+      await this.getEmployees(this.numberOfEmployees);
       alert('Employee deleted.')
     }
     else {
-      alert('Employee could not be deleted.')
+      await this.getEmployees(this.numberOfEmployees);
+      alert('At least one Employee could not be deleted.')
     }
-    await this.getEmployees(this.numberOfEmployees);
+
   }
 
 }

@@ -31,8 +31,9 @@ export class EmployeeService {
 
   }*/
   async AddEmployeeJson(value: Employee){
+    let jsonString = value.toJson();
     let response;
-    response = await firstValueFrom(this.http.post(this._employeesUrl, value, {observe: 'response'}));
+    response = await firstValueFrom(this.http.post(this._employeesUrl, jsonString, {observe: 'response'}));
     return response.statusText;
   }
    async GetEmployees(top: number){
@@ -47,10 +48,16 @@ export class EmployeeService {
      return this._employees;
   }
 
-  async DeleteEmployee(id: number){
+  async DeleteEmployee(ids: Number[]){
     let response;
-    response = await firstValueFrom(this.http.delete(`${this._employeesUrl}/?id=${id}`, {observe: 'response'}));
-    return response.statusText;
+    let text = 'OK';
+    for (let id of ids) {
+      response = await firstValueFrom(this.http.delete(`${this._employeesUrl}/?id=${id}`, {observe: 'response'}));
+      if (response.statusText != 'OK'){
+        text = response.statusText;
+      }
+    }
+    return text;
   }
 
 
