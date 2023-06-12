@@ -50,6 +50,7 @@ export class EmployeeService {
   async DeleteEmployee(id: number){
     let response;
     response = await firstValueFrom(this.http.delete(`${this._employeesUrl}/?id=${id}`, {observe: 'response'}));
+    console.log(response.statusText);
     return response.statusText;
   }
 

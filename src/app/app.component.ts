@@ -53,12 +53,12 @@ export class AppComponent{
   async deleteEmployeeAsync(id: any){
     let text = await this.service.DeleteEmployee(id);
     if (text == 'OK'){
+      this.getEmployees(this.numberOfEmployees);
       alert('Employee deleted.')
     }
     else {
       alert('Employee could not be deleted.')
     }
-    await this.getEmployees(this.numberOfEmployees);
   }
 
 }
