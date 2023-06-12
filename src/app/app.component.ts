@@ -28,51 +28,37 @@ export class AppComponent{
 
  async getEmployees(value: number) {
     this.employees = [];
-   let temp: Employee[] = [];
-    await this.service.GetEmployees(value)
-      .then(value =>{
-        temp = value;
-
-      });
-
-
-   this.employees = temp;
+    this.employees = await this.service.GetEmployees(value);
     this.numberOfRowsSubmitted = true;
   }
 
   addEmployee($event: Employee) {
-
-
-      this.service.AddEmployeeJson($event)
-        .then(value =>{
-          this.getEmployees(this.numberOfEmployees);
-          console.log(value);
-          if(value == 'OK'){
-
-            alert('Employee added.')
-          }
-          else{
-            alert('Employee could not be added');
-          }
-        })
-
+      this.addEmployeeAsync($event);
+  }
+  async addEmployeeAsync(input: Employee){
+    let text = await this.service.AddEmployeeJson(input);
+    if (text == 'OK'){
+      await this.getEmployees(this.numberOfEmployees);
+      alert('Employee was successfully added.');
+    }
+    else {
+      alert('Employee could not be added.');
+    }
 
   }
 
   deleteEmployee(id: any) {
-    this.service.DeleteEmployee(id)
-      .then(value => {
-        this.getEmployees(this.numberOfEmployees);
-        if (value == 'OK'){
-
-          alert(`Employee with ID ${id} deleted.`);
-        }
-        else {
-          alert(`Employee could not be deleted`);
-        }
-      })
-
-
-
+    this.deleteEmployeeAsync(id);
   }
+  async deleteEmployeeAsync(id: any){
+    let text = await this.service.DeleteEmployee(id);
+    if (text == 'OK'){
+      alert('Employee deleted.')
+    }
+    else {
+      alert('Employee could not be deleted.')
+    }
+    await this.getEmployees(this.numberOfEmployees);
+  }
+
 }

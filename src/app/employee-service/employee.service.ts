@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {last, map, Observable, throwError, toArray} from "rxjs";
+import {firstValueFrom, last, lastValueFrom, map, Observable, throwError, toArray} from "rxjs";
 import { catchError, retry } from 'rxjs/operators';
 import {HttpClient, HttpErrorResponse, HttpEvent, HttpHandler, HttpHeaders, HttpRequest} from '@angular/common/http';
 import {Employee} from "./employee";
@@ -31,38 +31,26 @@ export class EmployeeService {
 
   }*/
   async AddEmployeeJson(value: Employee){
-
-    let text: string;
-
-    await this.http.post(this._employeesUrl, value, {observe: 'response'})
-      .subscribe(response =>{
-        text = response.statusText;
-        console.log(text);
-      });
-
-    return text;
+    let response;
+    response = await firstValueFrom(this.http.post(this._employeesUrl, value, {observe: 'response'}));
+    return response.statusText;
   }
    async GetEmployees(top: number){
-    this._employees = [];
-    await this.http.get(`${this._employeesUrl}/?top=${top}`)
-     .subscribe(response =>{
-       let array: any[]=[];
-       array.push(response);
-       for (let employee of array[0]) {
-         this._employees.push(Employee.fromJson(employee));
-       }
-     });
-    return this._employees;
+     this._employees = [];
+     const response = await lastValueFrom(this.http.get(`${this._employeesUrl}/?top=${top}`));
+
+     let array: any[] = [];
+     array.push(response);
+     for (let employee of array[0]) {
+       this._employees.push(Employee.fromJson(employee));
+     }
+     return this._employees;
   }
 
   async DeleteEmployee(id: number){
-    let text: string;
-    await this.http.delete(`${this._employeesUrl}/?id=${id}`, {observe: 'response'})
-      .subscribe(response =>{
-        text = response.statusText;
-
-      })
-    return text;
+    let response;
+    response = await firstValueFrom(this.http.delete(`${this._employeesUrl}/?id=${id}`, {observe: 'response'}));
+    return response.statusText;
   }
 
 
