@@ -30,6 +30,7 @@ static readonly tableHeader = [
     TitleOfCourtesy: this.TitleOfCourtesy,
     BirthDay: this.Birthday.toISOString(),
     HireDate: this.HireDate.toISOString(),
+    Address: this.Address,
     City: this.City,
     Region: this.Region,
     PostalCode: this.PostalCode,
