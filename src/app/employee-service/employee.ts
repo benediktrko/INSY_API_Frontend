@@ -28,8 +28,8 @@ static readonly tableHeader = [
     FirstName: this.FirstName,
     Title: this.Title,
     TitleOfCourtesy: this.TitleOfCourtesy,
-    BirthDay: this.Birthday.toJSON(),
-    HireDate: this.HireDate.toJSON(),
+    BirthDay: this.Birthday.toISOString(),
+    HireDate: this.HireDate.toISOString(),
     Address: this.Address,
     City: this.City,
     Region: this.Region,
@@ -67,6 +67,30 @@ static readonly tableHeader = [
       json.reportsTo,
       json.photoPath
       );
+  }
+  static fromUppercaseJson(json: any): Employee {
+
+
+    return new Employee(
+      json.EmployeeId,
+      json.LastName,
+      json.FirstName,
+      json.Title,
+      json.TitleOfCourtesy,
+      new Date(json.Birthday),
+      new Date(json.HireDate),
+      json.Address,
+      json.City,
+      json.Region,
+      json.PostalCode,
+      json.Country,
+      json.HomePhone,
+      json.Extension,
+      json.Photo,
+      json.Notes,
+      json.ReportsTo,
+      json.PhotoPath
+    );
   }
   constructor(private _employeeId: number,
               private _lastName: string,
