@@ -61,7 +61,6 @@ export class AppComponent{
       await this.getEmployees(this.numberOfEmployees);
       alert('At least one Employee could not be deleted.')
     }
-
   }
 
 }
